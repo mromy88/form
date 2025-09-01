@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrier Onboarding Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Styles & Variables --- */
+        :root {
+            /* Updated color scheme */
+            --primary-color: #111827; /* Near-black for titles and buttons */
+            --secondary-color: #F3F4F6; /* Light grey for the page background */
+            --text-color: #333;
+            --border-color: #D1D5DB;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        /* --- Form Container & Header --- */
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        .form-header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .form-header p {
+            color: #6B7280;
+            margin-top: 0.5rem;
+        }
+        
+        .logo-container {
+            /* This centers your SVG and gives it space at the bottom */
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-container svg {
+            /* This makes your SVG responsive */
+            max-width: 350px;
+            width: 100%;
+            height: auto;
+        }
+
+        /* --- Section Styling --- */
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        /* --- Input Grid & Field Styling --- */
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        label .required-star {
+            color: #EF4444;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: var(--font-family);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.2);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* --- Dynamic "Add" Sections --- */
+        .dynamic-section {
+            background-color: #F9FAFB;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .dynamic-item {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .dynamic-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.2s, transform 0.1s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-add {
+            background-color: #E5E7EB; /* Light grey */
+            color: #111827; /* Near-black */
+            margin-top: 1rem;
+        }
+        
+        .btn-add:hover {
+            background-color: #D1D5DB; /* Darker grey */
+        }
+        
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: #fff;
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 1rem;
+        }
+        
+        .btn-submit:hover {
+            background-color: #000;
+            transform: translateY(-2px);
+        }
+
+        /* --- Upload & Checkbox Styling --- */
+        .upload-group label, .checkbox-group-title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .checkbox-container, .radio-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-item input, .radio-item input {
+            margin-right: 0.5rem;
+        }
+
+        /* Verification Section */
+        .verification-box {
+            background-color: #F9FAFB;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .verification-box p {
+            margin-bottom: 1rem;
+        }
+
+        /* Hidden by default */
+        .hidden {
+            display: none;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            .form-container {
+                padding: 1.5rem;
+            }
+            .form-header h1 {
+                font-size: 1.8rem;
+            }
+            .form-section h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <header class="form-header">
+            <div class="logo-container">
+                <!-- 
+                    PASTE YOUR ENTIRE SVG CODE HERE.
+                    It will be centered and sized automatically.
+                    Example: <svg width="350" ...> ... </svg>
+                -->
+            </div>
+            <h1>Carrier Onboarding & Dispatch Agreement Setup</h1>
+            <p>Welcome! Please complete this form to get set up in our system.</p>
+        </header>
+
+        <form action="#" method="POST" id="onboardingForm">
+
+            <!-- Section 1: Company Information -->
+            <section class="form-section">
+                <h2>Section 1: Company Information</h2>
+                <div class="input-grid">
+                    <div class="form-group full-width">
+                        <label for="company-name">Company Name <span class="required-star">*</span></label>
+                        <input type="text" id="company-name" name="company_name" placeholder="Enter Legal Company Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tax-id">Federal Tax ID (EIN) <span class="required-star">*</span></label>
+                        <input type="text" id="tax-id" name="tax_id" placeholder="XX-XXXXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mc-number">MC Number <span class="required-star">*</span></label>
+                        <input type="text" id="mc-number" name="mc_number" placeholder="Enter MC Number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dot-number">DOT Number <span class="required-star">*</span></label>
+                        <input type="text" id="dot-number" name="dot_number" placeholder="Enter DOT Number" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="duns-number">DUNS Number</label>
+                        <input type="text" id="duns-number" name="duns_number" placeholder="(Optional)">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="physical-address">Physical Address <span class="required-star">*</span></label>
+                        <input type="text" id="physical-address" name="physical_address" placeholder="Street Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="physical_city" placeholder="City" required>
+                    </div>
+                     <div class="form-group">
+                        <input type="text" name="physical_state" placeholder="State" required>
+                    </div>
+                     <div class="form-group">
+                        <input type="text" name="physical_zip" placeholder="Zip Code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company-email">Main Company Email <span class="required-star">*</span></label>
+                        <input type="email" id="company-email" name="company_email" placeholder="contact@company.com" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="company-phone">Main Company Phone <span class="required-star">*</span></label>
+                        <input type="tel" id="company-phone" name="company_phone" placeholder="(555) 555-5555" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="company-fax">Fax Number</label>
+                        <input type="tel" id="company-fax" name="company_fax" placeholder="(Optional)">
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 2: Primary Officer -->
+            <section class="form-section">
+                <h2>Section 2: Primary Officer / Authorized Contact</h2>
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="officer-name">Full Name <span class="required-star">*</span></label>
+                        <input type="text" id="officer-name" name="officer_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="officer-title">Title <span class="required-star">*</span></label>
+                        <input type="text" id="officer-title" name="officer_title" placeholder="e.g., Owner, CEO" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="officer-email">Direct Email <span class="required-star">*</span></label>
+                        <input type="email" id="officer-email" name="officer_email" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="officer-mobile">Mobile Phone <span class="required-star">*</span></label>
+                        <input type="tel" id="officer-mobile" name="officer_mobile" required>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Identity Verification (NEW) -->
+            <section class="form-section">
+                <h2>Section 3: Identity Verification</h2>
+                <div class="verification-box">
+                    <p>To protect your account, we require the primary officer to complete a secure identity verification through Stripe. Please click the button below to start. You will be redirected back here upon completion.</p>
+                    <!-- 
+                        IMPORTANT: Replace "#" with your server-generated Stripe Identity URL.
+                        This URL should include a `return_url` parameter pointing back to this form.
+                    -->
+                    <a href="#" target="_blank" class="btn btn-submit" style="width: auto; background-color: #1D4ED8;">Start ID Verification</a>
+                    <div class="checkbox-item" style="margin-top: 1rem;">
+                        <input type="checkbox" id="verification-complete" name="verification_complete" required>
+                        <label for="verification-complete">I have successfully completed the identity verification process.</label>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 4: Driver Information -->
+            <section class="form-section">
+                <h2>Section 4: Driver Information</h2>
+                <div id="drivers-container">
+                    <div class="dynamic-item">
+                        <div class="input-grid">
+                            <div class="form-group">
+                                <label for="driver-name-1">Driver 1: Full Name <span class="required-star">*</span></label>
+                                <input type="text" id="driver-name-1" name="driver_name[]" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="driver-phone-1">Phone Number <span class="required-star">*</span></label>
+                                <input type="tel" id="driver-phone-1" name="driver_phone[]" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="driver-license-1">Driver's License # <span class="required-star">*</span></label>
+                                <input type="text" id="driver-license-1" name="driver_license[]" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="driver-license-exp-1">License Expiration Date <span class="required-star">*</span></label>
+                                <input type="date" id="driver-license-exp-1" name="driver_license_exp[]" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-add" onclick="addDriver()">+ Add Another Driver</button>
+            </section>
+
+            <!-- Section 5: Equipment Profile -->
+            <section class="form-section">
+                <h2>Section 5: Equipment Profile</h2>
+                <div id="equipment-container">
+                    <div class="dynamic-item">
+                         <div class="input-grid">
+                             <div class="form-group">
+                                <label for="equipment-type-1">Equipment Type</label>
+                                <select id="equipment-type-1" name="equipment_type[]">
+                                    <option value="">-- Select Type --</option>
+                                    <option value="Sleeper Truck">Sleeper Truck</option>
+                                    <option value="Day Cab Truck">Day Cab Truck</option>
+                                    <option value="53' Dry Van">53' Dry Van</option>
+                                    <option value="53' Reefer">53' Reefer</option>
+                                    <option value="Flatbed">Flatbed</option>
+                                    <option value="Step Deck">Step Deck</option>
+                                    <option value="Hotshot">Hotshot</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="equipment-quantity-1">Quantity</label>
+                                <input type="number" id="equipment-quantity-1" name="equipment_quantity[]" min="1" value="1">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="equipment-vins-1">VINs / Unit Numbers</label>
+                                <textarea id="equipment-vins-1" name="equipment_vins[]" placeholder="List all VINs or unit numbers for this equipment type"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-add" onclick="addEquipment()">+ Add Equipment Type</button>
+            </section>
+            
+             <!-- Section 6: Insurance & Authority -->
+            <section class="form-section">
+                <h2>Section 6: Insurance & Authority Documents</h2>
+                 <div class="input-grid">
+                    <div class="form-group">
+                        <label for="insurance-company">Insurance Company Name <span class="required-star">*</span></label>
+                        <input type="text" id="insurance-company" name="insurance_company" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="insurance-agent">Agent Name & Phone <span class="required-star">*</span></label>
+                        <input type="text" id="insurance-agent" name="insurance_agent" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cargo-insurance">Cargo Insurance Amount <span class="required-star">*</span></label>
+                        <input type="text" id="cargo-insurance" name="cargo_insurance" placeholder="$100,000" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="liability-insurance">Liability Insurance Amount <span class="required-star">*</span></label>
+                        <input type="text" id="liability-insurance" name="liability_insurance" placeholder="$1,000,000" required>
+                    </div>
+                    <div class="form-group upload-group full-width">
+                        <label for="file-coi">Certificate of Insurance (COI) <span class="required-star">*</span></label>
+                        <input type="file" id="file-coi" name="file_coi" required>
+                    </div>
+                    <div class="form-group upload-group full-width">
+                        <label for="file-w9">W-9 Form <span class="required-star">*</span></label>
+                        <input type="file" id="file-w9" name="file_w9" required>
+                    </div>
+                     <div class="form-group upload-group full-width">
+                        <label for="file-authority">MC Authority Letter <span class="required-star">*</span></label>
+                        <input type="file"id="file-authority" name="file_authority" required>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: Payment Information (NEW) -->
+            <section class="form-section">
+                <h2>Section 7: Payment Information</h2>
+                <div class="form-group">
+                    <label>How will you be receiving payments?<span class="required-star">*</span></label>
+                    <div class="radio-container">
+                        <div class="radio-item">
+                            <input type="radio" id="pay-factoring" name="payment_method" value="factoring" required>
+                            <label for="pay-factoring">Factoring Company</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="pay-carrier" name="payment_method" value="carrier">
+                            <label for="pay-carrier">Pay Directly to Carrier</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fields for Factoring -->
+                <div id="factoring-info" class="hidden dynamic-section" style="margin-top: 1.5rem;">
+                    <div class="input-grid">
+                        <div class="form-group full-width">
+                            <label for="factoring-name">Factoring Company Name</label>
+                            <input type="text" id="factoring-name" name="factoring_name">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="factoring-address">Factoring Company Address</label>
+                            <input type="text" id="factoring-address" name="factoring_address" placeholder="Street, City, State, Zip">
+                        </div>
+                        <div class="form-group">
+                            <label for="factoring-phone">Factoring Company Phone</label>
+                            <input type="tel" id="factoring-phone" name="factoring_phone">
+                        </div>
+                        <div class="form-group upload-group full-width">
+                            <label for="file-noa">Notice of Assignment (NOA)</label>
+                            <input type="file" id="file-noa" name="file_noa">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fields for Direct to Carrier -->
+                <div id="carrier-pay-info" class="hidden dynamic-section" style="margin-top: 1.5rem;">
+                     <div class="input-grid">
+                        <div class="form-group full-width">
+                            <label for="carrier-pay-name">Payee Name (if different from Company Name)</label>
+                            <input type="text" id="carrier-pay-name" name="carrier_pay_name">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 8: Special Certificates -->
+            <section class="form-section">
+                <h2>Section 8: Special Certificates & Capabilities</h2>
+                <div class="checkbox-group">
+                    <p class="checkbox-group-title">Check all that apply:</p>
+                    <div class="checkbox-container">
+                        <div class="checkbox-item"><input type="checkbox" id="cert-hazmat" name="certs[]" value="Hazmat"><label for="cert-hazmat">Hazmat</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cert-twic" name="certs[]" value="TWIC"><label for="cert-twic">TWIC Card</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cert-carb" name="certs[]" value="CARB"><label for="cert-carb">CARB Compliant</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cert-team" name="certs[]" value="Team Drivers"><label for="cert-team">Team Drivers</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cert-liftgate" name="certs[]" value="Liftgate"><label for="cert-liftgate">Liftgate Service</label></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 9: Lane & Rate Preferences -->
+            <section class="form-section">
+                <h2>Section 9: Lane & Rate Preferences</h2>
+                 <div id="lanes-container">
+                     <div class="dynamic-item">
+                         <div class="input-grid">
+                             <div class="form-group">
+                                 <label for="lane-origin-1">Preferred Origin(s) <span class="required-star">*</span></label>
+                                 <input type="text" id="lane-origin-1" name="lane_origin[]" placeholder="e.g., Midwest, Chicago IL" required>
+                             </div>
+                             <div class="form-group">
+                                 <label for="lane-destination-1">Preferred Destination(s) <span class="required-star">*</span></label>
+                                 <input type="text" id="lane-destination-1" name="lane_destination[]" placeholder="e.g., Southeast, FL/GA" required>
+                             </div>
+                             <div class="form-group full-width">
+                                 <label for="lane-rate-1">Target Rate Per Mile (All-In) <span class="required-star">*</span></label>
+                                 <input type="text" id="lane-rate-1" name="lane_rate[]" placeholder="$2.50/mile" required>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <button type="button" class="btn btn-add" onclick="addLane()">+ Add Lane Preference</button>
+
+                 <div class="form-group full-width" style="margin-top: 2rem;">
+                     <label for="general-notes">General Notes</label>
+                     <textarea id="general-notes" name="general_notes" placeholder="e.g., No NYC, Driver home on weekends, Prefer loads under 40,000 lbs, etc."></textarea>
+                 </div>
+            </section>
+
+            <button type="submit" class="btn btn-submit">Submit Onboarding Form</button>
+        </form>
+    </div>
+
+    <script>
+        // --- Dynamic Section for Drivers ---
+        let driverCount = 1;
+        function addDriver() {
+            driverCount++;
+            const container = document.getElementById('drivers-container');
+            const newDriver = document.createElement('div');
+            newDriver.className = 'dynamic-item';
+            newDriver.innerHTML = `
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="driver-name-${driverCount}">Driver ${driverCount}: Full Name <span class="required-star">*</span></label>
+                        <input type="text" id="driver-name-${driverCount}" name="driver_name[]" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="driver-phone-${driverCount}">Phone Number <span class="required-star">*</span></label>
+                        <input type="tel" id="driver-phone-${driverCount}" name="driver_phone[]" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="driver-license-${driverCount}">Driver's License # <span class="required-star">*</span></label>
+                        <input type="text" id="driver-license-${driverCount}" name="driver_license[]" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="driver-license-exp-${driverCount}">License Expiration Date <span class="required-star">*</span></label>
+                        <input type="date" id="driver-license-exp-${driverCount}" name="driver_license_exp[]" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newDriver);
+        }
+
+        // --- Dynamic Section for Equipment ---
+        let equipmentCount = 1;
+        function addEquipment() {
+            equipmentCount++;
+            const container = document.getElementById('equipment-container');
+            const newEquipment = document.createElement('div');
+            newEquipment.className = 'dynamic-item';
+            newEquipment.innerHTML = `
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="equipment-type-${equipmentCount}">Equipment Type</label>
+                        <select id="equipment-type-${equipmentCount}" name="equipment_type[]">
+                            <option value="">-- Select Type --</option>
+                            <option value="Sleeper Truck">Sleeper Truck</option>
+                            <option value="Day Cab Truck">Day Cab Truck</option>
+                            <option value="53' Dry Van">53' Dry Van</option>
+                            <option value="53' Reefer">53' Reefer</option>
+                            <option value="Flatbed">Flatbed</option>
+                            <option value="Step Deck">Step Deck</option>
+                            <option value="Hotshot">Hotshot</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="equipment-quantity-${equipmentCount}">Quantity</label>
+                        <input type="number" id="equipment-quantity-${equipmentCount}" name="equipment_quantity[]" min="1" value="1">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="equipment-vins-${equipmentCount}">VINs / Unit Numbers</label>
+                        <textarea id="equipment-vins-${equipmentCount}" name="equipment_vins[]" placeholder="List all VINs or unit numbers for this equipment type"></textarea>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newEquipment);
+        }
+        
+        // --- Dynamic Section for Lanes ---
+        let laneCount = 1;
+        function addLane() {
+            laneCount++;
+            const container = document.getElementById('lanes-container');
+            const newLane = document.createElement('div');
+            newLane.className = 'dynamic-item';
+            newLane.innerHTML = `
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label for="lane-origin-${laneCount}">Preferred Origin(s) <span class="required-star">*</span></label>
+                        <input type="text" id="lane-origin-${laneCount}" name="lane_origin[]" placeholder="e.g., Midwest, Chicago IL" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lane-destination-${laneCount}">Preferred Destination(s) <span class="required-star">*</span></label>
+                        <input type="text" id="lane-destination-${laneCount}" name="lane_destination[]" placeholder="e.g., Southeast, FL/GA" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="lane-rate-${laneCount}">Target Rate Per Mile (All-In) <span class="required-star">*</span></label>
+                        <input type="text" id="lane-rate-${laneCount}" name="lane_rate[]" placeholder="$2.50/mile" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newLane);
+        }
+
+        // --- Logic for showing/hiding payment info ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+            const factoringInfo = document.getElementById('factoring-info');
+            const carrierPayInfo = document.getElementById('carrier-pay-info');
+            const factoringInputs = factoringInfo.querySelectorAll('input, select');
+
+            paymentRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'factoring') {
+                        factoringInfo.classList.remove('hidden');
+                        carrierPayInfo.classList.add('hidden');
+                        // Make factoring fields required when visible
+                        factoringInputs.forEach(input => input.required = true);
+                    } else {
+                        factoringInfo.classList.add('hidden');
+                        carrierPayInfo.classList.remove('hidden');
+                        // Make factoring fields not required when hidden
+                        factoringInputs.forEach(input => input.required = false);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
